@@ -14,6 +14,6 @@ namespace Race_Day.Models
         public Participants? Participant { get; set; }
         public Events? Event { get; set; }
         public Categories? Category { get; set; }
-        public Results? Result { get; set; }
+        public results? Result { get; set; }
     }
 }

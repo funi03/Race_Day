@@ -1,6 +1,6 @@
 ﻿namespace Race_Day.Models
 {
-    public class Results
+    public class results
     {
         public int ResultID { get; set; }
         public int EnrolmentID { get; set; }
