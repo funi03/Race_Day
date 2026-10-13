@@ -38,7 +38,7 @@ namespace Race_Day.Data
                 .HasForeignKey<Result>(r => r.EnrolmentID);
 
             // Unique email
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<Users>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
         }
