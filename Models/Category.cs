@@ -2,7 +2,7 @@
 
 namespace Race_Day.Models
 {
-    public class Categories
+    public class Category
     {
         public int CategoryID { get; set; }        // ← PRIMARY KEY — must exist
         public int EventID { get; set; }           // ← FK to Events

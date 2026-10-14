@@ -12,7 +12,7 @@
         public string EventType { get; set; } = string.Empty; // Run, Walk, Cycle
 
         public Organisers? Organiser { get; set; }
-        public List<Categories> Categories { get; set; } = new();
+        public List<Category> Categories { get; set; } = new();
         public List<EventEnrolments> Enrolments { get; set; } = new();
     }
 }
