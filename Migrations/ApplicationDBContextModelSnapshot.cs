@@ -274,19 +274,19 @@ namespace Race_Day.Migrations
                     b.HasOne("Race_Day.Models.Category", "Category")
                         .WithMany("Enrolments")
                         .HasForeignKey("CategoryID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Race_Day.Models.Event", "Event")
                         .WithMany("Enrolments")
                         .HasForeignKey("EventID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Race_Day.Models.Participant", "Participant")
                         .WithMany("Enrolments")
                         .HasForeignKey("ParticipantID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Category");
@@ -323,7 +323,7 @@ namespace Race_Day.Migrations
                     b.HasOne("Race_Day.Models.EventEnrolment", "Enrolment")
                         .WithOne("Result")
                         .HasForeignKey("Race_Day.Models.Result", "EnrolmentID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Enrolment");
