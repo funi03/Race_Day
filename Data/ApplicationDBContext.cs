@@ -18,9 +18,10 @@ namespace Race_Day.Data
         public DbSet<EventEnrolment> EventEnrolments { get; set; }
         public DbSet<Result> Results { get; set; }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // ---- Explicit primary keys (belt and braces) ----
+            // ---- Explicit primary keys ----
             modelBuilder.Entity<User>().HasKey(u => u.UserID);
             modelBuilder.Entity<Organiser>().HasKey(o => o.OrganiserID);
             modelBuilder.Entity<Participant>().HasKey(p => p.ParticipantID);
@@ -28,6 +29,15 @@ namespace Race_Day.Data
             modelBuilder.Entity<Category>().HasKey(c => c.CategoryID);
             modelBuilder.Entity<EventEnrolment>().HasKey(e => e.EnrolmentID);
             modelBuilder.Entity<Result>().HasKey(r => r.ResultID);
+
+            // ---- Decimal precision (matches SQL script DECIMAL(6,2)) ----
+            modelBuilder.Entity<Event>()
+                .Property(e => e.Distance)
+                .HasPrecision(6, 2);
+
+            modelBuilder.Entity<Category>()
+                .Property(c => c.DistanceKm)
+                .HasPrecision(6, 2);
 
             // ---- One-to-one: User -> Organiser ----
             modelBuilder.Entity<Organiser>()
