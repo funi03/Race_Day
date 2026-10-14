@@ -80,7 +80,7 @@ namespace Race_Day.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EventDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Distance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Distance = table.Column<decimal>(type: "decimal(6,2)", precision: 6, scale: 2, nullable: false),
                     EventType = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -102,7 +102,7 @@ namespace Race_Day.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EventID = table.Column<int>(type: "int", nullable: false),
                     CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DistanceKm = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    DistanceKm = table.Column<decimal>(type: "decimal(6,2)", precision: 6, scale: 2, nullable: true),
                     MinimumAge = table.Column<int>(type: "int", nullable: true),
                     MaximumAge = table.Column<int>(type: "int", nullable: true),
                     MaximumParticipants = table.Column<int>(type: "int", nullable: false)

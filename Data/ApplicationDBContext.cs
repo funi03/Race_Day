@@ -51,11 +51,31 @@ namespace Race_Day.Data
                 .WithOne(u => u.Participant)
                 .HasForeignKey<Participant>(p => p.UserID);
 
-            // ---- One-to-one: Enrolment -> Result ----
+            // ---- EventEnrolment relationships (Restrict to avoid cascade cycles) ----
+            modelBuilder.Entity<EventEnrolment>()
+                .HasOne(e => e.Participant)
+                .WithMany(p => p.Enrolments)
+                .HasForeignKey(e => e.ParticipantID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<EventEnrolment>()
+                .HasOne(e => e.Event)
+                .WithMany(ev => ev.Enrolments)
+                .HasForeignKey(e => e.EventID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<EventEnrolment>()
+                .HasOne(e => e.Category)
+                .WithMany(c => c.Enrolments)
+                .HasForeignKey(e => e.CategoryID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // ---- One-to-one: Enrolment -> Result (Restrict) ----
             modelBuilder.Entity<Result>()
                 .HasOne(r => r.Enrolment)
                 .WithOne(e => e.Result)
-                .HasForeignKey<Result>(r => r.EnrolmentID);
+                .HasForeignKey<Result>(r => r.EnrolmentID)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // ---- Unique email ----
             modelBuilder.Entity<User>()
