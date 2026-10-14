@@ -3,11 +3,11 @@ using Race_Day.Models;
 
 namespace Race_Day.Data
 {
-        public class ApplicationDBContext : DbContext
-        {//start class
-            public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
+    public class ApplicationDBContext : DbContext
+    {
+        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options)
+            : base(options)
         {
-
         }
 
         public DbSet<User> Users { get; set; }
@@ -20,28 +20,37 @@ namespace Race_Day.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Enforce one-to-one: User -> Organiser / Participant
+            // ---- Explicit primary keys (belt and braces) ----
+            modelBuilder.Entity<User>().HasKey(u => u.UserID);
+            modelBuilder.Entity<Organiser>().HasKey(o => o.OrganiserID);
+            modelBuilder.Entity<Participant>().HasKey(p => p.ParticipantID);
+            modelBuilder.Entity<Event>().HasKey(e => e.EventID);
+            modelBuilder.Entity<Category>().HasKey(c => c.CategoryID);
+            modelBuilder.Entity<EventEnrolment>().HasKey(e => e.EnrolmentID);
+            modelBuilder.Entity<Result>().HasKey(r => r.ResultID);
+
+            // ---- One-to-one: User -> Organiser ----
             modelBuilder.Entity<Organiser>()
                 .HasOne(o => o.User)
                 .WithOne(u => u.Organiser)
                 .HasForeignKey<Organiser>(o => o.UserID);
 
+            // ---- One-to-one: User -> Participant ----
             modelBuilder.Entity<Participant>()
                 .HasOne(p => p.User)
                 .WithOne(u => u.Participant)
                 .HasForeignKey<Participant>(p => p.UserID);
 
-            // Enforce one-to-one: Enrolment -> Result
+            // ---- One-to-one: Enrolment -> Result ----
             modelBuilder.Entity<Result>()
                 .HasOne(r => r.Enrolment)
                 .WithOne(e => e.Result)
                 .HasForeignKey<Result>(r => r.EnrolmentID);
 
-            // Unique email
+            // ---- Unique email ----
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
         }
     }
 }
-

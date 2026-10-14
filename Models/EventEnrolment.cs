@@ -4,10 +4,15 @@ namespace Race_Day.Models
 {
     public class EventEnrolment
     {
-        public int EnrolmentID { get; set; }        // ← PRIMARY KEY — the crucial line
+        // Primary key
+        public int EnrolmentID { get; set; }
+
+        // Foreign keys
         public int ParticipantID { get; set; }
         public int EventID { get; set; }
         public int CategoryID { get; set; }
+
+        // Properties
         public DateTime EnrolmentDate { get; set; } = DateTime.UtcNow;
         public string Status { get; set; } = "Registered";
 

@@ -3,13 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Race_Day.Data;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
+// ---------- Services ----------
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-// Swagger with XML comments (Rubric: Swagger Integration)
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
@@ -18,6 +17,7 @@ builder.Services.AddSwaggerGen(options =>
         Version = "v1",
         Description = "RaceDay Event Management System — PROG6212 Part 2 API"
     });
+
     var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = System.IO.Path.Combine(AppContext.BaseDirectory, xmlFile);
     if (System.IO.File.Exists(xmlPath)) options.IncludeXmlComments(xmlPath);
@@ -48,6 +48,7 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+// ---------- Middleware ----------
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
