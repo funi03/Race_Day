@@ -4,18 +4,17 @@ namespace Race_Day.Models
 {
     public class EventEnrolment
     {
-        public int EnrolmentID { get; set; }        // ← PRIMARY KEY — must exist
-        public int ParticipantID { get; set; }      // ← FK
-        public int EventID { get; set; }            // ← FK
-        public int CategoryID { get; set; }         // ← FK
+        public int EnrolmentID { get; set; }
+        public int ParticipantID { get; set; }
+        public int EventID { get; set; }
+        public int CategoryID { get; set; }
         public DateTime EnrolmentDate { get; set; } = DateTime.UtcNow;
         public string Status { get; set; } = "Registered";
 
-        // Navigation
+        // Navigation properties — note the CAPITAL R and the TYPE Result
         public Participant? Participant { get; set; }
         public Event? Event { get; set; }
         public Category? Category { get; set; }
-        public result? Result { get; set; }
-        public object result { get; internal set; }
+        public Result? Result { get; set; }        
     }
 }

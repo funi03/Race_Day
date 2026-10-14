@@ -16,7 +16,7 @@ namespace Race_Day.Data
         public DbSet<Event> Events { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<EventEnrolment> EventEnrolments { get; set; }
-        public DbSet<result> Results { get; set; }
+        public DbSet<Result> Results { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,10 +32,10 @@ namespace Race_Day.Data
                 .HasForeignKey<Participant>(p => p.UserID);
 
             // Enforce one-to-one: Enrolment -> Result
-            modelBuilder.Entity<result>()
+            modelBuilder.Entity<Result>()
                 .HasOne(r => r.Enrolment)
                 .WithOne(e => e.Result)
-                .HasForeignKey<result>(r => r.EnrolmentID);
+                .HasForeignKey<Result>(r => r.EnrolmentID);
 
             // Unique email
             modelBuilder.Entity<User>()
