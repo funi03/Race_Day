@@ -4,15 +4,17 @@ namespace Race_Day.Models
 {
     public class Categories
     {
-        public int CategoryID { get; set; }
-        public int EventID { get; set; }
+        public int CategoryID { get; set; }        // ← PRIMARY KEY — must exist
+        public int EventID { get; set; }           // ← FK to Events
         public string CategoryName { get; set; } = string.Empty;
         public decimal? DistanceKm { get; set; }
         public int? MinimumAge { get; set; }
         public int? MaximumAge { get; set; }
         public int MaximumParticipants { get; set; }
 
+        // Navigation
         public Events? Event { get; set; }
         public List<EventEnrolments> Enrolments { get; set; } = new();
     }
 }
+    
