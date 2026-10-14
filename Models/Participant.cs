@@ -1,13 +1,13 @@
 ﻿namespace Race_Day.Models
 {
-    public class Participants
+    public class Participant
     {
         public int ParticipantID { get; set; }
         public int UserID { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string EmergencyContact { get; set; } = string.Empty;
 
-        public Users? User { get; set; }
-        public List<EventEnrolments> Enrolments { get; set; } = new();
+        public User? User { get; set; }
+        public List<EventEnrolment> Enrolments { get; set; } = new();
     }
 }

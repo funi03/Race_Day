@@ -1,6 +1,6 @@
 ﻿namespace Race_Day.Models
 {
-    public class Users
+    public class User
     {
         public int UserID { get; set; }
         public string FullName { get; set; } = string.Empty;
@@ -9,7 +9,7 @@
         public string Role { get; set; } = string.Empty; // "Organiser" or "Participant"
 
         // Navigation
-        public Organisers? Organiser { get; set; }
-        public Participants? Participant { get; set; }
+        public Organiser? Organiser { get; set; }
+        public Participant? Participant { get; set; }
     }
 }

@@ -10,35 +10,35 @@ namespace Race_Day.Data
 
         }
 
-        public DbSet<Users> Users { get; set; }
-        public DbSet<Organisers> Organisers { get; set; }
-        public DbSet<Participants> Participants { get; set; }
-        public DbSet<Events> Events { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Organiser> Organisers { get; set; }
+        public DbSet<Participant> Participants { get; set; }
+        public DbSet<Event> Events { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<EventEnrolments> EventEnrolments { get; set; }
-        public DbSet<results> Results { get; set; }
+        public DbSet<EventEnrolment> EventEnrolments { get; set; }
+        public DbSet<result> Results { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Enforce one-to-one: User -> Organiser / Participant
-            modelBuilder.Entity<Organisers>()
+            modelBuilder.Entity<Organiser>()
                 .HasOne(o => o.User)
                 .WithOne(u => u.Organiser)
-                .HasForeignKey<Organisers>(o => o.UserID);
+                .HasForeignKey<Organiser>(o => o.UserID);
 
-            modelBuilder.Entity<Participants>()
+            modelBuilder.Entity<Participant>()
                 .HasOne(p => p.User)
                 .WithOne(u => u.Participant)
-                .HasForeignKey<Participants>(p => p.UserID);
+                .HasForeignKey<Participant>(p => p.UserID);
 
             // Enforce one-to-one: Enrolment -> Result
-            modelBuilder.Entity<results>()
+            modelBuilder.Entity<result>()
                 .HasOne(r => r.Enrolment)
                 .WithOne(e => e.Result)
-                .HasForeignKey<results>(r => r.EnrolmentID);
+                .HasForeignKey<result>(r => r.EnrolmentID);
 
             // Unique email
-            modelBuilder.Entity<Users>()
+            modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
         }

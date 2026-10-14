@@ -1,6 +1,6 @@
 ﻿namespace Race_Day.Models
 {
-    public class Events
+    public class Event
     {
         public int EventID { get; set; }
         public int OrganiserID { get; set; }
@@ -11,8 +11,8 @@
         public decimal Distance { get; set; }
         public string EventType { get; set; } = string.Empty; // Run, Walk, Cycle
 
-        public Organisers? Organiser { get; set; }
+        public Organiser? Organiser { get; set; }
         public List<Category> Categories { get; set; } = new();
-        public List<EventEnrolments> Enrolments { get; set; } = new();
+        public List<EventEnrolment> Enrolments { get; set; } = new();
     }
 }

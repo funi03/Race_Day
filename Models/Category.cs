@@ -13,8 +13,8 @@ namespace Race_Day.Models
         public int MaximumParticipants { get; set; }
 
         // Navigation
-        public Events? Event { get; set; }
-        public List<EventEnrolments> Enrolments { get; set; } = new();
+        public Event? Event { get; set; }
+        public List<EventEnrolment> Enrolments { get; set; } = new();
     }
 }
     
