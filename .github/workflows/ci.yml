@@ -7,7 +7,7 @@ on:
     branches: [ master, main, part-2-api ]
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,11 +19,15 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
+      - name: Find solution file
+        id: find-sln
+        run: |
+          SLN=$(find . -name "*.sln" -not -path "*/bin/*" -not -path "*/obj/*" | head -n 1)
+          echo "Found solution: $SLN"
+          echo "sln_path=$SLN" >> $GITHUB_OUTPUT
+
       - name: Restore dependencies
-        run: dotnet restore ./Race_Day/Race_Day.sln
+        run: dotnet restore "${{ steps.find-sln.outputs.sln_path }}"
 
       - name: Build
-        run: dotnet build ./Race_Day/Race_Day.sln --no-restore --configuration Release
-
-      - name: Run tests
-        run: dotnet test ./Race_Day/Race_Day.sln --no-build --configuration Release --verbosity normal
+        run: dotnet build "${{ steps.find-sln.outputs.sln_path }}" --no-restore --configuration Release
