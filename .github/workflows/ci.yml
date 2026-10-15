@@ -2,12 +2,12 @@ name: RaceDay CI
 
 on:
   push:
-    branches: [ master, main, part-2-api ]
+    branches: [ master, main ]
   pull_request:
-    branches: [ master, main, part-2-api ]
+    branches: [ master, main ]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,15 +19,11 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
-      - name: Find solution file
-        id: find-sln
-        run: |
-          SLN=$(find . -name "*.sln" -not -path "*/bin/*" -not -path "*/obj/*" | head -n 1)
-          echo "Found solution: $SLN"
-          echo "sln_path=$SLN" >> $GITHUB_OUTPUT
+      - name: Restore API project
+        run: dotnet restore ./Race_Day.csproj
 
-      - name: Restore dependencies
-        run: dotnet restore "${{ steps.find-sln.outputs.sln_path }}"
+      - name: Build API project
+        run: dotnet build ./Race_Day.csproj --no-restore --configuration Release
 
-      - name: Build
-        run: dotnet build "${{ steps.find-sln.outputs.sln_path }}" --no-restore --configuration Release
+      - name: Run tests
+        run: dotnet test ./TestProjectRD/TestProjectRD.csproj --configuration Release --verbosity normal
