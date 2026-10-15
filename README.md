@@ -212,6 +212,9 @@ The project uses **GitHub Actions** to build the API automatically when changes 
 
 The workflow helps identify build errors and maintain code quality.
 
+<img width="1360" height="648" alt="workflow" src="https://github.com/user-attachments/assets/df89535c-caf4-47e6-a890-14df81ca040d" />
+
+
 ## Video Walkthrough
 
 **RaceDay API — Part 2 Walkthrough**
