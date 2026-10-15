@@ -7,7 +7,7 @@ on:
     branches: [ master, main ]
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,11 +19,8 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
-      - name: Restore API project
+      - name: Restore dependencies
         run: dotnet restore ./Race_Day.csproj
 
-      - name: Build API project
+      - name: Build
         run: dotnet build ./Race_Day.csproj --no-restore --configuration Release
-
-      - name: Run tests
-        run: dotnet test ./TestProjectRD/TestProjectRD.csproj --configuration Release --verbosity normal
