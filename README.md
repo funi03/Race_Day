@@ -226,6 +226,33 @@ The walkthrough demonstrates:
 
 *Add your unlisted YouTube video URL here.*
 
+---
+
+## Submission Structure
+
+This project is submitted as **two separate folders**:
+
+### 1. `Race_Day/` — The API Project
+
+The main ASP.NET Core Web API project. To run the API:
+
+1. Open `Race_Day.sln` in Visual Studio 2022.
+2. Run `Update-Database` in the Package Manager Console (Default project: `Race_Day`).
+3. Press **F5** — Swagger opens at `/swagger`.
+
+### 2. `TestProjectRD/` — The Test Project
+
+The xUnit test project. To run the tests:
+
+1. Open `TestProjectRD.csproj` in Visual Studio 2022.
+2. Ensure the project reference to `..\Race_Day\Race_Day.csproj` resolves — the API project must be at the path `..\Race_Day\` relative to this project.
+3. Press **Test → Run All Tests**.
+
+### Relationship between the two folders
+
+`TestProjectRD` references `Race_Day` via a project reference. When both folders are placed as siblings — `Race_Day/` and `TestProjectRD/` — the reference resolves correctly and the tests run against the API project.
+
+
 ## Author
 
 **Funanani Nelitshindwe**
