@@ -1,0 +1,26 @@
+﻿@model System.Text.Json.Nodes.JsonArray
+@{
+    ViewData["Title"] = "Upcoming Events";
+}
+
+<h2 class="mt-4">Upcoming Events</h2>
+
+<div class="row mt-3">
+    @if (Model != null)
+    {
+        foreach (var ev in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm h-100">
+                    <img src="@(ev["imageUrl"]?.ToString() ?? "https://via.placeholder.com/600x300")" class="card-img-top" style="height:200px; object-fit:cover;" alt="Event">
+                    <div class="card-body">
+                        <h5 class="card-title">@ev["eventName"]</h5>
+                        <p class="card-text text-muted">@ev["location"] | @ev["distance"]km</p>
+                        <p class="card-text">@ev["description"]</p>
+                        <span class="badge bg-success">Confirmed</span>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
