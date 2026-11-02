@@ -1,0 +1,32 @@
+﻿@model System.Text.Json.Nodes.JsonArray
+@{
+    ViewData["Title"] = "Organiser Dashboard";
+}
+
+<h2 class="mt-4">My Events</h2>
+<a asp-action="CreateEvent" class="btn btn-primary mb-3">Create New Event</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Event Name</th>
+            <th>Date</th>
+            <th>Location</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var ev in Model)
+            {
+                <tr>
+                    <td>@ev["eventName"]</td>
+                    <td>@ev["eventDate"]</td>
+                    <td>@ev["location"]</td>
+                    <td><a asp-action="EventEnrolments" asp-route-id="@ev["eventID"]" class="btn btn-sm btn-info">View Enrolments</a></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
