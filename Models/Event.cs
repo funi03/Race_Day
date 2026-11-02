@@ -11,6 +11,8 @@
         public decimal Distance { get; set; }
         public string EventType { get; set; } = string.Empty; // Run, Walk, Cycle
 
+        public string? ImageUrl { get; set; }
+
         public Organiser? Organiser { get; set; }
         public List<Category> Categories { get; set; } = new();
         public List<EventEnrolment> Enrolments { get; set; } = new();
