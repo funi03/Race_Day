@@ -20,9 +20,13 @@
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     <Compile Remove="UnitTest1.cs" />
+    <Compile Remove="RaceDay.Web\**" />
     <Compile Remove="TestProjectRD\**" />
+    <Content Remove="RaceDay.Web\**" />
     <Content Remove="TestProjectRD\**" />
+    <EmbeddedResource Remove="RaceDay.Web\**" />
     <EmbeddedResource Remove="TestProjectRD\**" />
+    <None Remove="RaceDay.Web\**" />
     <None Remove="TestProjectRD\**" />
   </ItemGroup>
 
