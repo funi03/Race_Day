@@ -18,6 +18,12 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <Compile Remove="UnitTest1.cs" />
+    <Compile Remove="TestProjectRD\**" />
+    <Content Remove="TestProjectRD\**" />
+    <EmbeddedResource Remove="TestProjectRD\**" />
+    <None Remove="TestProjectRD\**" />
   </ItemGroup>
+
 
 </Project>
