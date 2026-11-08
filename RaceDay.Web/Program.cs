@@ -13,7 +13,8 @@ builder.Services.AddSession(options => {
 
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddHttpClient<ApiService>(client => {
+builder.Services.AddHttpClient<ApiService>(client =>
+{
     client.BaseAddress = new Uri(builder.Configuration["ApiSettings:BaseUrl"]!);
 });
 
