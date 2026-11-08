@@ -18,7 +18,6 @@ builder.Services.AddHttpClient<ApiService>(client =>
     client.BaseAddress = new Uri(builder.Configuration["ApiSettings:BaseUrl"]!);
 });
 
-builder.Services.AddScoped<ApiService>();
 
 var app = builder.Build();
 
