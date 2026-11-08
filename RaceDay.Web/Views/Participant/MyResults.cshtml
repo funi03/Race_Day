@@ -1,0 +1,28 @@
+﻿@model System.Text.Json.Nodes.JsonArray
+@{
+    ViewData["Title"] = "My Results";
+}
+
+<h2 class="mt-4">My Race Results</h2>
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>Event</th>
+            <th>Position</th>
+            <th>Finish Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var res in Model)
+            {
+                <tr>
+                    <td>@res["enrolment"]?["event"]?["eventName"]</td>
+                    <td>@res["finishPosition"]</td>
+                    <td>@res["finishTime"]</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
