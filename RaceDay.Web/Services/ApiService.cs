@@ -77,27 +77,40 @@ namespace RaceDay.Web.Services
                 var content = new MultipartFormDataContent();
                 content.Add(new StreamContent(image.OpenReadStream()), "file", image.FileName);
                 var uploadRes = await _http.PostAsync("api/blob/upload", content);
+
                 if (uploadRes.IsSuccessStatusCode)
                 {
                     var json = await uploadRes.Content.ReadFromJsonAsync<JsonNode>();
                     imageUrl = json?["url"]?.ToString() ?? imageUrl;
+                }
+                else
+                {
+                    var uploadError = await uploadRes.Content.ReadAsStringAsync();
+                    return $"Image upload failed: {uploadError}";
                 }
             }
 
             // 2. Create Event
             var eventPayload = new
             {
-                EventName = data.GetType().GetProperty("EventName")?.GetValue(data),
-                Description = data.GetType().GetProperty("Description")?.GetValue(data),
+                EventName = data.GetType().GetProperty("EventName")?.GetValue(data)?.ToString(),
+                Description = data.GetType().GetProperty("Description")?.GetValue(data)?.ToString(),
                 EventDate = data.GetType().GetProperty("EventDate")?.GetValue(data),
-                Location = data.GetType().GetProperty("Location")?.GetValue(data),
+                Location = data.GetType().GetProperty("Location")?.GetValue(data)?.ToString(),
                 Distance = data.GetType().GetProperty("Distance")?.GetValue(data),
-                EventType = data.GetType().GetProperty("EventType")?.GetValue(data),
+                EventType = data.GetType().GetProperty("EventType")?.GetValue(data)?.ToString(),
                 ImageUrl = imageUrl
             };
 
             var response = await _http.PostAsJsonAsync("api/events", eventPayload);
-            return response.IsSuccessStatusCode ? null : "Failed to create event.";
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorDetails = await response.Content.ReadAsStringAsync();
+                return $"Failed to create event. Status: {response.StatusCode}. Details: {errorDetails}";
+            }
+
+            return null;
         }
 
         // --- ENROLMENTS & RESULTS ---
