@@ -68,7 +68,7 @@ namespace RaceDay.Web.Services
 
         public async Task<string?> CreateEventAsync(object data, IFormFile? image)
         {
-            AddAuthCookie();
+            AddAuthCookie(); // <-- Make sure this is at the top!
             string imageUrl = "https://via.placeholder.com/600x300?text=RaceDay+Event";
 
             // 1. Upload Image via API
@@ -76,7 +76,18 @@ namespace RaceDay.Web.Services
             {
                 var content = new MultipartFormDataContent();
                 content.Add(new StreamContent(image.OpenReadStream()), "file", image.FileName);
-                var uploadRes = await _http.PostAsync("api/blob/upload", content);
+
+                // We need to pass the auth cookie again just for this request to be safe
+                var request = new HttpRequestMessage(HttpMethod.Post, "api/blob/upload");
+                request.Content = content;
+
+                var cookie = _httpContextAccessor.HttpContext?.Request.Headers["Cookie"].ToString();
+                if (!string.IsNullOrEmpty(cookie))
+                {
+                    request.Headers.Add("Cookie", cookie);
+                }
+
+                var uploadRes = await _http.SendAsync(request);
 
                 if (uploadRes.IsSuccessStatusCode)
                 {
@@ -85,11 +96,12 @@ namespace RaceDay.Web.Services
                 }
                 else
                 {
-                    // THIS IS THE NEW PART - It will show us the Status Code!
                     var uploadError = await uploadRes.Content.ReadAsStringAsync();
                     return $"Upload failed with Status: {uploadRes.StatusCode}. Details: {uploadError}";
                 }
             }
+
+            // ... rest of the Create Event code ...
 
             // 2. Create Event
             var eventPayload = new
