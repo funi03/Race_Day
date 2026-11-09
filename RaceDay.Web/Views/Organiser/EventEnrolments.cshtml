@@ -22,7 +22,7 @@
         <tr>
             <th>Participant Name</th>
             <th>Status</th>
-            <th>Capture Result</th> 
+            <th>Capture Result</th> <!-- NEW COLUMN -->
         </tr>
     </thead>
     <tbody>
@@ -34,13 +34,14 @@
                     <td>@enrol["participant"]?["user"]?["fullName"]</td>
                     <td><span class="badge bg-success">@enrol["status"]</span></td>
 
+                    <!-- FORM TO CAPTURE RESULT -->
                     <td>
                         <form asp-action="AddResult" method="post" class="d-flex gap-2">
                             <input type="hidden" name="enrolmentId" value="@enrol["enrolmentID"]" />
                             <input type="hidden" name="eventId" value="@ViewBag.EventId" />
 
-                            <input type="number" name="finishPosition" placeholder="Position (e.g. 1)" class="form-control form-control-sm" style="width: 120px;" required />
-                            <input type="text" name="finishTime" placeholder="Time (00:30:00)" class="form-control form-control-sm" style="width: 130px;" required />
+                            <input type="number" name="finishPosition" placeholder="Position" class="form-control form-control-sm" style="width: 100px;" required />
+                            <input type="text" name="finishTime" placeholder="00:30:00" class="form-control form-control-sm" style="width: 120px;" required />
 
                             <button type="submit" class="btn btn-sm btn-success">Save</button>
                         </form>
