@@ -2,7 +2,29 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="p-5 mb-4 bg-dark text-white rounded-3 shadow-lg mt-4" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?q=80&w=2069') center/cover;">
+    <div class="container-fluid py-5">
+        <h1 class="display-4 fw-bold text-warning">Welcome to RaceDay</h1>
+        <p class="col-md-8 fs-4">The ultimate platform for Organisers to host events, and Participants to conquer them. Join the community of runners, walkers, and cyclists today.</p>
+        <hr class="my-4 border-light" />
+        <div class="d-flex gap-3 mt-4">
+            <a asp-controller="Account" asp-action="Login" class="btn btn-primary btn-lg px-4">Log In to Get Started</a>
+            <a asp-controller="Participant" asp-action="Index" class="btn btn-outline-light btn-lg px-4">Browse Events</a>
+        </div>
+    </div>
+</div>
+
+<div class="row align-items-md-stretch mt-5">
+    <div class="col-md-6 mb-4">
+        <div class="h-100 p-5 text-bg-light border rounded-3 shadow-sm">
+            <h3 class="fw-bold text-primary">For Organisers</h3>
+            <p>Create and manage events effortlessly. Upload custom banners, track enrolments, and capture race results all in one place.</p>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="h-100 p-5 bg-white border rounded-3 shadow-sm">
+            <h3 class="fw-bold text-success">For Participants</h3>
+            <p>Find the perfect race, enrol in seconds, and track your personal race history and results across all events.</p>
+        </div>
+    </div>
 </div>
