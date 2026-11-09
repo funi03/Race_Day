@@ -85,8 +85,9 @@ namespace RaceDay.Web.Services
                 }
                 else
                 {
+                    // THIS IS THE NEW PART - It will show us the Status Code!
                     var uploadError = await uploadRes.Content.ReadAsStringAsync();
-                    return $"Image upload failed: {uploadError}";
+                    return $"Upload failed with Status: {uploadRes.StatusCode}. Details: {uploadError}";
                 }
             }
 
