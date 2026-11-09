@@ -4,6 +4,14 @@
 }
 
 <h2 class="mt-4">My Events</h2>
+@if (TempData["Msg"] != null)
+{
+    <div class="alert alert-success">@TempData["Msg"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
 <a asp-action="CreateEvent" class="btn btn-primary mb-3">Create New Event</a>
 
 <table class="table table-striped">
@@ -24,7 +32,13 @@
                     <td>@ev["eventName"]</td>
                     <td>@ev["eventDate"]</td>
                     <td>@ev["location"]</td>
-                    <td><a asp-action="EventEnrolments" asp-route-id="@ev["eventID"]" class="btn btn-sm btn-info">View Enrolments</a></td>
+                    <td>
+                        <a asp-action="EventEnrolments" asp-route-id="@ev["eventID"]" class="btn btn-sm btn-info">View Enrolments</a>
+
+                        <form asp-action="DeleteEvent" asp-route-id="@ev["eventID"]" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this event?');">
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </td>
                 </tr>
             }
         }

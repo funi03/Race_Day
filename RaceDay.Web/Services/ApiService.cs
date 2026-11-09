@@ -113,6 +113,12 @@ namespace RaceDay.Web.Services
 
             return null;
         }
+        public async Task<bool> DeleteEventAsync(int eventId)
+        {
+            AddAuthCookie();
+            var response = await _http.DeleteAsync($"api/events/{eventId}");
+            return response.IsSuccessStatusCode;
+        }
 
         // --- ENROLMENTS & RESULTS ---
         public async Task<JsonArray?> GetMyEnrolmentsAsync()

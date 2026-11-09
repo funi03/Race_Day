@@ -30,7 +30,6 @@ namespace Race_Day.Controllers
         }
 
         /// <summary>Returns all RaceDay events. Public.</summary>
-        /// <response code="200">List of events.</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
@@ -40,8 +39,6 @@ namespace Race_Day.Controllers
         }
 
         /// <summary>Returns one event by ID. Public.</summary>
-        /// <response code="200">Event found.</response>
-        /// <response code="404">Event not found.</response>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -52,9 +49,6 @@ namespace Race_Day.Controllers
         }
 
         /// <summary>Creates a new event. Organiser only.</summary>
-        /// <response code="201">Event created.</response>
-        /// <response code="401">Not authenticated.</response>
-        /// <response code="403">Not an Organiser.</response>
         [HttpPost]
         [Authorize(Roles = "Organiser")]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -73,9 +67,6 @@ namespace Race_Day.Controllers
         }
 
         /// <summary>Updates own event. Organiser only, ownership enforced.</summary>
-        /// <response code="200">Event updated.</response>
-        /// <response code="403">Not the owner of this event.</response>
-        /// <response code="404">Event not found.</response>
         [HttpPut("{id}")]
         [Authorize(Roles = "Organiser")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -100,9 +91,6 @@ namespace Race_Day.Controllers
         }
 
         /// <summary>Deletes own event. Organiser only, ownership enforced.</summary>
-        /// <response code="204">Event deleted.</response>
-        /// <response code="403">Not the owner of this event.</response>
-        /// <response code="404">Event not found.</response>
         [HttpDelete("{id}")]
         [Authorize(Roles = "Organiser")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

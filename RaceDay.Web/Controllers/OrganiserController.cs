@@ -41,5 +41,20 @@ namespace RaceDay.Web.Controllers
             ViewBag.EventId = id;
             return View(enrolments);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteEvent(int id)
+        {
+            if (!IsOrganiser()) return RedirectToAction("Login", "Account");
+
+            var success = await _api.DeleteEventAsync(id);
+
+            if (success)
+                TempData["Msg"] = "Event deleted successfully.";
+            else
+                TempData["Error"] = "Failed to delete event.";
+
+            return RedirectToAction("Dashboard");
+        }
     }
 }
