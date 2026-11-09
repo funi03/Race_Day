@@ -10,29 +10,54 @@ namespace Race_Day.Controllers
     public class BlobController : ControllerBase
     {
         private readonly IConfiguration _config;
-        public BlobController(IConfiguration config) => _config = config;
+        private readonly IWebHostEnvironment _environment;
+
+        public BlobController(IConfiguration config, IWebHostEnvironment environment)
+        {
+            _config = config;
+            _environment = environment;
+        }
 
         [HttpPost("upload")]
         public async Task<IActionResult> Upload(IFormFile file)
         {
             if (file == null || file.Length == 0) return BadRequest("No file.");
 
-            // For marking purposes, if no Azure string is provided, return a placeholder
-            var connectionString = _config["AzureBlob:ConnectionString"] ?? "placeholder";
-            if (connectionString == "placeholder" || string.IsNullOrEmpty(connectionString))
+            var connectionString = _config["AzureBlob:ConnectionString"];
+
+            // OPTION 1: If you have a real Azure Connection String, use Azure!
+            if (!string.IsNullOrEmpty(connectionString) && connectionString != "placeholder")
             {
-                return Ok(new { url = "https://via.placeholder.com/600x300?text=RaceDay+Event" });
+                var blobServiceClient = new BlobServiceClient(connectionString);
+                var containerClient = blobServiceClient.GetBlobContainerClient("event-banners");
+                await containerClient.CreateIfNotExistsAsync(Azure.Storage.Blobs.Models.PublicAccessType.Blob);
+
+                var blobClient = containerClient.GetBlobClient(Guid.NewGuid().ToString() + Path.GetExtension(file.FileName));
+                using var stream = file.OpenReadStream();
+                await blobClient.UploadAsync(stream, true);
+
+                return Ok(new { url = blobClient.Uri.ToString() });
             }
 
-            var blobServiceClient = new BlobServiceClient(connectionString);
-            var containerClient = blobServiceClient.GetBlobContainerClient("event-banners");
-            await containerClient.CreateIfNotExistsAsync(Azure.Storage.Blobs.Models.PublicAccessType.Blob);
+            // OPTION 2: Local Fallback (For your Lab PC demonstration)
+            var webRoot = _environment.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+            var uploadDir = Path.Combine(webRoot, "images");
 
-            var blobClient = containerClient.GetBlobClient(Guid.NewGuid().ToString() + Path.GetExtension(file.FileName));
-            using var stream = file.OpenReadStream();
-            await blobClient.UploadAsync(stream, true);
+            if (!Directory.Exists(uploadDir))
+            {
+                Directory.CreateDirectory(uploadDir);
+            }
 
-            return Ok(new { url = blobClient.Uri.ToString() });
+            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+            var filePath = Path.Combine(uploadDir, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            var url = $"{Request.Scheme}://{Request.Host}/images/{fileName}";
+            return Ok(new { url = url });
         }
     }
 }
