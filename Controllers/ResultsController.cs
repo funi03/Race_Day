@@ -101,21 +101,20 @@ namespace Race_Day.Controllers
         /// <response code="403">Not a Participant.</response>
         [HttpGet("participants/me/results")]
         [Authorize(Roles = "Participant")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> MyResults()
         {
-            var participant = await _context.Participants
-                .FirstOrDefaultAsync(p => p.UserID == CurrentUserId());
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var participant = await _context.Participants.FirstOrDefaultAsync(p => p.UserID == userId);
             if (participant == null) return Forbid();
 
             var results = await _context.Results
                 .Include(r => r.Enrolment)
-                    .ThenInclude(e => e!.Event)
+                    .ThenInclude(e => e!.Event)     
+                   
                 .Where(r => r.Enrolment!.ParticipantID == participant.ParticipantID)
                 .ToListAsync();
 
             return Ok(results);
         }
     }
-}
+    }
