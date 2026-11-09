@@ -2,9 +2,9 @@ name: RaceDay CI
 
 on:
   push:
-    branches: [ master, main ]
+    branches: [ master, main, Part-3 ]
   pull_request:
-    branches: [ master, main ]
+    branches: [ master, main, Part-3 ]
 
 jobs:
   build:
@@ -20,7 +20,7 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore ./Race_Day.csproj
+        run: dotnet restore ./Race_Day.sln
 
       - name: Build
-        run: dotnet build ./Race_Day.csproj --no-restore --configuration Release
+        run: dotnet build ./Race_Day.sln --no-restore --configuration Release
