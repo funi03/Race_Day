@@ -1,4 +1,6 @@
-﻿namespace Race_Day.Models
+﻿using System.Text.Json.Serialization;
+
+namespace Race_Day.Models
 {
     public class Event
     {
@@ -9,12 +11,15 @@
         public DateTime EventDate { get; set; }
         public string Location { get; set; } = string.Empty;
         public decimal Distance { get; set; }
-        public string EventType { get; set; } = string.Empty; // Run, Walk, Cycle
-
+        public string EventType { get; set; } = string.Empty;
         public string? ImageUrl { get; set; }
 
         public Organiser? Organiser { get; set; }
+
+        [JsonIgnore] 
         public List<Category> Categories { get; set; } = new();
+
+        [JsonIgnore] 
         public List<EventEnrolment> Enrolments { get; set; } = new();
     }
 }

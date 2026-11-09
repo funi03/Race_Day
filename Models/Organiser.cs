@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Text.Json.Serialization;
 
 namespace Race_Day.Models
 {
@@ -10,6 +10,8 @@ namespace Race_Day.Models
         public string ContactNumber { get; set; } = string.Empty;
 
         public User? User { get; set; }
+
+        [JsonIgnore] 
         public List<Event> Events { get; set; } = new();
     }
 }

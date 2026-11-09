@@ -1,4 +1,6 @@
-﻿namespace Race_Day.Models
+﻿using System.Text.Json.Serialization;
+
+namespace Race_Day.Models
 {
     public class Participant
     {
@@ -8,6 +10,7 @@
         public string EmergencyContact { get; set; } = string.Empty;
 
         public User? User { get; set; }
+        [JsonIgnore]
         public List<EventEnrolment> Enrolments { get; set; } = new();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using System.Text.Json.Serialization;
 
 namespace Race_Day.Models
 {
@@ -14,6 +15,7 @@ namespace Race_Day.Models
 
         // Navigation
         public Event? Event { get; set; }
+        [JsonIgnore]
         public List<EventEnrolment> Enrolments { get; set; } = new();
     }
 }
