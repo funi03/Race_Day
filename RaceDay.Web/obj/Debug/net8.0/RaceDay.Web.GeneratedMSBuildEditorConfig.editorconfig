@@ -44,8 +44,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydGljaXBhbnRcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Student/source/repos/Race_Day/RaceDay.Web/Views/Participant/MyEnrolment.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydGljaXBhbnRcTXlFbnJvbG1lbnQuY3NodG1s
+[C:/Users/Student/source/repos/Race_Day/RaceDay.Web/Views/Participant/MyEnrolments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydGljaXBhbnRcTXlFbnJvbG1lbnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Student/source/repos/Race_Day/RaceDay.Web/Views/Participant/MyResults.cshtml]
