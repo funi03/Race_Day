@@ -42,8 +42,7 @@ namespace RaceDay.Web.Controllers
             return View(enrolments);
         }
 
-        [HttpPost]
-       
+     
         [HttpPost]
         public async Task<IActionResult> DeleteEvent(int id)
         {
@@ -60,19 +59,19 @@ namespace RaceDay.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddResult(int enrolmentId, int finishPosition, string finishTime, int eventId)
-        {
-            if (!IsOrganiser()) return RedirectToAction("Login", "Account");
+    public async Task<IActionResult> AddResult(int enrolmentId, int finishPosition, string finishTime, int eventId)
+   {
+    if (!IsOrganiser()) return RedirectToAction("Login", "Account");
+    
+    var success = await _api.AddResultAsync(enrolmentId, finishPosition, finishTime);
+    
+    if (success)
+        TempData["Msg"] = "Result saved successfully!";
+    else
+        TempData["Error"] = "Failed to save result.";
 
-            var success = await _api.AddResultAsync(enrolmentId, finishPosition, finishTime);
-
-            if (success)
-                TempData["Msg"] = "Result saved successfully!";
-            else
-                TempData["Error"] = "Failed to save result.";
-
-            return RedirectToAction("EventEnrolments", new { id = eventId });
-        }
+    return RedirectToAction("EventEnrolments", new { id = eventId });
+}
 
     }
 }
