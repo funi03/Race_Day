@@ -24,3 +24,4 @@ jobs:
 
       - name: Build
         run: dotnet build ./Race_Day.sln --no-restore --configuration Release
+        
