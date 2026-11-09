@@ -86,19 +86,18 @@ namespace Race_Day.Controllers
         /// <response code="404">Event not found.</response>
         [HttpGet("events/{eventId}/enrolments")]
         [Authorize(Roles = "Organiser")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> EventEnrolments(int eventId)
         {
-            var organiser = await _context.Organisers
-                .FirstOrDefaultAsync(o => o.UserID == CurrentUserId());
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var organiser = await _context.Organisers.FirstOrDefaultAsync(o => o.UserID == userId);
             var ev = await _context.Events.FindAsync(eventId);
             if (ev == null) return NotFound();
             if (organiser == null || ev.OrganiserID != organiser.OrganiserID) return Forbid();
 
             var list = await _context.EventEnrolments
                 .Include(e => e.Participant)
+                    .ThenInclude(p => p.User) 
+                .Include(e => e.Category)    
                 .Where(e => e.EventID == eventId)
                 .ToListAsync();
 
