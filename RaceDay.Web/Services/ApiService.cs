@@ -68,23 +68,25 @@ namespace RaceDay.Web.Services
 
         public async Task<string?> CreateEventAsync(object data, IFormFile? image)
         {
-            AddAuthCookie(); // <-- Make sure this is at the top!
             string imageUrl = "https://via.placeholder.com/600x300?text=RaceDay+Event";
+
+            // Get the auth cookie directly from the browser
+            var cookieString = _httpContextAccessor.HttpContext?.Request.Headers["Cookie"].ToString();
 
             // 1. Upload Image via API
             if (image != null && image.Length > 0)
             {
-                var content = new MultipartFormDataContent();
-                content.Add(new StreamContent(image.OpenReadStream()), "file", image.FileName);
+                using var content = new MultipartFormDataContent();
+                var fileContent = new StreamContent(image.OpenReadStream());
+                content.Add(fileContent, "file", image.FileName);
 
-                // We need to pass the auth cookie again just for this request to be safe
-                var request = new HttpRequestMessage(HttpMethod.Post, "api/blob/upload");
+                using var request = new HttpRequestMessage(HttpMethod.Post, "api/blob/upload");
                 request.Content = content;
 
-                var cookie = _httpContextAccessor.HttpContext?.Request.Headers["Cookie"].ToString();
-                if (!string.IsNullOrEmpty(cookie))
+                // Manually attach the cookie to this specific request
+                if (!string.IsNullOrEmpty(cookieString))
                 {
-                    request.Headers.Add("Cookie", cookie);
+                    request.Headers.Add("Cookie", cookieString);
                 }
 
                 var uploadRes = await _http.SendAsync(request);
@@ -101,8 +103,6 @@ namespace RaceDay.Web.Services
                 }
             }
 
-            // ... rest of the Create Event code ...
-
             // 2. Create Event
             var eventPayload = new
             {
@@ -115,7 +115,16 @@ namespace RaceDay.Web.Services
                 ImageUrl = imageUrl
             };
 
-            var response = await _http.PostAsJsonAsync("api/events", eventPayload);
+            using var postRequest = new HttpRequestMessage(HttpMethod.Post, "api/events");
+            postRequest.Content = JsonContent.Create(eventPayload);
+
+            // Manually attach the cookie to the event creation
+            if (!string.IsNullOrEmpty(cookieString))
+            {
+                postRequest.Headers.Add("Cookie", cookieString);
+            }
+
+            var response = await _http.SendAsync(postRequest);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -125,6 +134,7 @@ namespace RaceDay.Web.Services
 
             return null;
         }
+        
         public async Task<bool> DeleteEventAsync(int eventId)
         {
             AddAuthCookie();
