@@ -30,5 +30,21 @@ namespace RaceDay.Web.Controllers
             var results = await _api.GetMyResultsAsync();
             return View(results);
         }
+
+        // 👇 THIS IS THE ACTION THAT WAS MISSING 👇
+        [HttpPost]
+        public async Task<IActionResult> Enrol(int categoryId)
+        {
+            if (!IsParticipant()) return RedirectToAction("Login", "Account");
+
+            var success = await _api.EnrolAsync(categoryId);
+
+            if (success)
+                TempData["Msg"] = "Successfully enrolled!";
+            else
+                TempData["Error"] = "Failed to enrol. Category might not exist.";
+
+            return RedirectToAction("Index");
+        }
     }
 }
