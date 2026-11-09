@@ -228,6 +228,10 @@ The project uses **GitHub Actions** to automate the build and validation process
 
 The workflow is triggered whenever changes are pushed to the `Part-3` branch.
 
+<img width="1360" height="602" alt="Screenshot 2026-11-09 164051" src="https://github.com/user-attachments/assets/970185a1-fce3-429e-ad74-7842d2ed2f48" />
+
+
+
 ### Pipeline Activities
 
 1. Sets up the .NET 8.0 SDK.
