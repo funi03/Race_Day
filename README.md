@@ -280,7 +280,4 @@ It brings together backend API development, MVC architecture, database integrati
 **Thank you for exploring the RaceDay Event Management System!** 🏁
 
 ```
-## Unit Test
-
-<img width="1363" height="742" alt="unit test" src="https://github.com/user-attachments/assets/8a009af2-e368-43ca-942b-febea00045dc" />
 
