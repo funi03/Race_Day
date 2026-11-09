@@ -19,12 +19,14 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
+      # Build the API (Pointing to the root)
       - name: Restore API
-        run: dotnet restore ./Race_Day/Race_Day.csproj
+        run: dotnet restore ./Race_Day.csproj
 
       - name: Build API
-        run: dotnet build ./Race_Day/Race_Day.csproj --no-restore --configuration Release
+        run: dotnet build ./Race_Day.csproj --no-restore --configuration Release
 
+      # Build the Web App (Pointing to the subfolder)
       - name: Restore Web
         run: dotnet restore ./RaceDay.Web/RaceDay.Web.csproj
 
