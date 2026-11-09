@@ -160,5 +160,20 @@ namespace RaceDay.Web.Services
             var response = await _http.GetAsync($"api/events/{eventId}/enrolments");
             return response.IsSuccessStatusCode ? await response.Content.ReadFromJsonAsync<JsonArray>() : null;
         }
+        public async Task<bool> AddResultAsync(int enrolmentId, int finishPosition, string finishTime)
+        {
+            AddAuthCookie();
+            // The API expects a TimeSpan for FinishTime. "00:31:45" format.
+            var payload = new
+            {
+                EnrolmentID = enrolmentId,
+                FinishPosition = finishPosition,
+                FinishTime = finishTime,
+                ResultStatus = "Finished"
+            };
+
+            var response = await _http.PostAsJsonAsync("api/results", payload);
+            return response.IsSuccessStatusCode;
+        }
     }
 }
